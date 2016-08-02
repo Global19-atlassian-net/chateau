@@ -1,3 +1,6 @@
+var moment = require('moment');
+module.exports = moment
+
 module.exports = function(config) {
     var exports = {};
 
@@ -496,12 +499,21 @@ module.exports = function(config) {
                 result: result
             });
         })
+        //.format("YYYY-MM-DD-kk-ss")
+        r.db(db).table(table).get(doc[primaryKey]).update({timestamp: moment.utc().format("YYYY-MM-DD-kk-mm")}).run( connection, {timeFormat: 'raw'}, function(error, result) {
+            if (error) handleError(error);
+            res.json({
+                error: error,
+                result: result
+            });
+        })
     }
 
     exports.docInsert = function (req, res) {
         var db = req.body.db;
         var table = req.body.table;
         var doc = req.body.doc;
+        doc.timestamp = moment.utc().format("YYYY-MM-DD-kk-mm")
 
         r.db(db).table(table).insert(doc).run( connection, {timeFormat: 'raw'}, function(error, result) {
             if (error) handleError(error);
@@ -578,7 +590,16 @@ module.exports = function(config) {
                     result: result
                 });
             })
+        r.db(db).table(table).update({timestamp: moment.utc().format("YYYY-MM-DD-kk-mm")}).run( connection, {timeFormat: 'raw'}, function(error, result) {
+            if (error) handleError(error);
+            res.json({
+                error: error,
+                result: result
+            });
+        })
     }
+    
+    
     exports.fieldAdd = function (req, res) {
         var db = req.body.db;
         var table = req.body.table;
@@ -598,14 +619,17 @@ module.exports = function(config) {
         switch(req.body.type) {
             case types[0]: //'string':
                 ref[name] = req.body.value;
+                updateDoc.timestamp = moment.utc().format("YYYY-MM-DD-kk-mm")
                 query = query.update(updateDoc);
                 break;
             case types[1]://'number':
                 ref[name] = parseFloat(req.body.value);
+                updateDoc.timestamp = moment.utc().format("YYYY-MM-DD-kk-mm")
                 query = query.update(updateDoc);
                 break;
             case types[2]://'boolean':
                 ref[name] = (req.body.value === "true");
+                updateDoc.timestamp = moment.utc().format("YYYY-MM-DD-kk-mm")
                 query = query.update(updateDoc);
                 break;
             case types[3]://'date':
@@ -613,19 +637,23 @@ module.exports = function(config) {
                 if ((typeof ref[name].epoch_time != 'number') || (ref[name] != ref[name])) {
                     error = "Could not parse date";
                 }
+                updateDoc.timestamp = moment.utc().format("YYYY-MM-DD-kk-mm")
                 query = query.update(updateDoc);
                 break;
             case types[4]://'null':
                 ref[name] = null;
+                updateDoc.timestamp = moment.utc().format("YYYY-MM-DD-kk-mm")
                 query = query.update(updateDoc);
                 break;
             case types[5]://'arbitrary value':
                 // WTF?!
                 ref[name] = eval('__var ='+req.body.value);
+                updateDoc.timestamp = moment.utc().format("YYYY-MM-DD-kk-mm")
                 query = query.update(updateDoc);
                 break;
             case types[6]://'function':
                 var fn = eval('('+req.body.value+')');
+                updateDoc.timestamp = moment.utc().format("YYYY-MM-DD-kk-mm")
                 query = query.update(fn);
                 break;
         }
@@ -685,6 +713,14 @@ module.exports = function(config) {
                     result: result
                 });
             })
+            
+        r.db(db).table(table).update({timestamp: moment.utc().format("YYYY-MM-DD-kk-mm")}).run( connection, {timeFormat: 'raw'}, function(error, result) {
+            if (error) handleError(error);
+            res.json({
+                error: error,
+                result: result
+            });
+        })
     }
 
 

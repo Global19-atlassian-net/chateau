@@ -1,13 +1,13 @@
 {
   "name": "chateau",
-  "version": "0.3.14",
-  "description": "Data explorer for RethinkDB",
+  "version": "0.3.14b",
+  "description": "Data explorer for RethinkDB (with blab-specific changes)",
   "main": "app.js",
   "directories": {},
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git://github.com/neumino/chateau"
+    "url": "git://github.com/blab/chateau"
   },
   "keywords": [
     "rethinkdb",
@@ -16,14 +16,15 @@
   "author": "Michel Tu <orphee@gmail.com> (http://justonepixel.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/neumino/chateau/issues"
+    "url": "https://github.com/blab/chateau/issues"
   },
   "dependencies": {
     "express": "3.3.4",
     "jade": "= 1.0.2",
     "rethinkdb": ">= 1.12.0-0",
     "optimist": " >= 0.6.0",
-    "stream": ">= 0.0.1"
+    "stream": ">= 0.0.1",
+    "moment": "2.13.0"
   },
   "devDependencies": {
     "karma-script-launcher": "~0.1.0",
