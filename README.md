@@ -1,3 +1,5 @@
+_Forked to allow timestamp updating when editing documents in chateau._
+
 # Chateau - Data explorer for RethinkDB.
 
 RethinkDB already comes with a "data explorer", which is more like a query buider.
